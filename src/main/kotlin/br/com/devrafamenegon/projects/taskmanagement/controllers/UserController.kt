@@ -2,6 +2,8 @@ package br.com.devrafamenegon.projects.taskmanagement.controllers
 
 import br.com.devrafamenegon.projects.taskmanagement.dtos.ErrorDTO
 import br.com.devrafamenegon.projects.taskmanagement.dtos.SuccessDTO
+import br.com.devrafamenegon.projects.taskmanagement.extensions.md5
+import br.com.devrafamenegon.projects.taskmanagement.extensions.toHex
 import br.com.devrafamenegon.projects.taskmanagement.models.User
 import br.com.devrafamenegon.projects.taskmanagement.repositories.UserRepository
 import org.springframework.http.HttpStatus
@@ -39,10 +41,15 @@ class UserController (val userRepository : UserRepository) {
                 errors.add("Password invalid")
             }
 
+            if (userRepository.findByEmail(user.email) != null) {
+                errors.add("User with this email already exists")
+            }
+
             if (errors.size > 0) {
                 return ResponseEntity(ErrorDTO(HttpStatus.BAD_REQUEST.value(), null, errors), HttpStatus.BAD_REQUEST)
             }
 
+            user.password = md5(user.password).toHex()
             userRepository.save(user)
 
             return ResponseEntity(SuccessDTO("User created with success"), HttpStatus.OK)
