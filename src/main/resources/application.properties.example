@@ -1,0 +1,7 @@
+ng.mvc.pathmatch.matching-strategy = ANT_PATH_MATCHER
+spring.datasource.url =
+spring.datasource.username =
+spring.datasource.password =
+spring.jpa.show-sql = false
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL57Dialect
+spring.jpa.hibernate.ddl-auto = update

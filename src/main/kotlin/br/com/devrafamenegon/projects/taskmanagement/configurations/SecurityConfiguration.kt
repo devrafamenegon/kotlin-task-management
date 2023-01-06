@@ -23,6 +23,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
             // which routes will be public
             http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/user").permitAll()
                 .anyRequest().authenticated()
 
             // security filter

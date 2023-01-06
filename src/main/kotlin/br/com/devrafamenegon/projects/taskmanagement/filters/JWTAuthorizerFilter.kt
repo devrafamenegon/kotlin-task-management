@@ -30,7 +30,7 @@ class JWTAuthorizerFilter (authenticationManager : AuthenticationManager, val jw
         val token = authorization.substring(7)
         if (jwtUtils.isValidToken(token)) {
             val idString = jwtUtils.getUserId(token)
-            if (!idString.isNullOrBlank() && !idString.isNullOrEmpty()) {
+            if (!idString.isNullOrBlank() && idString.isNotEmpty()) {
                 val user =  User(idString.toLong(), "User Test", "admin@admin.com", "admin123")
                 val userImpl = UserDetailImpl(user)
                 return UsernamePasswordAuthenticationToken(userImpl, null, userImpl.authorities)
