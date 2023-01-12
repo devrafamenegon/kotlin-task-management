@@ -1,19 +1,20 @@
 package br.com.devrafamenegon.projects.taskmanagement.models
 
 import com.fasterxml.jackson.annotation.JsonBackReference
-import javax.persistence.Entity
+import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
-data class User (
+data class Task (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-    val name: String = "",
-    val email: String = "",
-    var password: String = "",
+    var name: String = "",
+    var previousEndDate: LocalDate = LocalDate.MIN,
+    var endDate: LocalDate? = null,
 
     @JsonBackReference
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    val tasks : List<Task> = emptyList()
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idUser")
+    val user: User? = null,
 )
